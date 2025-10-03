@@ -1,0 +1,16 @@
+index.php
+<?php
+echo "Hello, this is a web page on server.cfonseca.ops and the current time is ";
+system("date");
+?>
+
+roundcube-config.inc.php (after setup)
+<?php
+$config['db_dsnw'] = 'mysql://roundcube:Password1234@localhost/roundcubemail';
+$config['enable_installer'] = true;
+$config['default_host'] = 'cfonseca.ops';
+$config['smtp_server'] = 'cfonseca.ops';
+$config['smtp_port'] = 25;
+$config['smtp_user'] = '';
+$config['smtp_pass'] = '';
+?>
