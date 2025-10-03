@@ -1,0 +1,57 @@
+named.conf (master server VM1)
+options {
+    directory "/var/named/";
+    allow-query {127.0.0.1; 192.168.0.0/24; any;};
+    forwarders { 168.63.129.16; };
+    allow-transfer {192.168.0.20;};
+};
+
+zone "localhost" {
+    type master;
+    file "named.localhost";
+};
+
+zone "cfonseca.ops" {
+    type master;
+    file "mydb-for-cfonseca-ops";
+};
+
+zone "0.168.192.in-addr.arpa" {
+    type master;
+    file "mydb-for-192.168.0";
+};
+
+mydb-for-cfonseca-ops
+$TTL 3D
+@   IN SOA @ cfonseca.ops. (
+        2022101201 ; Serial
+        8H         ; Refresh
+        2H         ; Retry
+        1W         ; Expire
+        1D )       ; Negative Cache TTL
+
+@       IN NS  server.cfonseca.ops.
+@       IN NS  client.cfonseca.ops.
+@       IN A   192.168.0.10
+server  IN A   192.168.0.10
+client  IN A   192.168.0.20
+ops345  IN A   192.168.0.33
+cfonseca IN A  192.168.0.100
+midterm IN A   192.168.0.200
+
+
+mydb-for-192.168.0
+$TTL 3D
+@ IN SOA @ cfonseca.ops. (
+        2022101203 ; Serial
+        8H ; Refresh
+        2H ; Retry
+        1W ; Expire
+        1D ) ; Negative Cache TTL
+
+@ IN NS server.cfonseca.ops.
+@ IN NS client.cfonseca.ops.
+
+10 IN PTR server.cfonseca.ops.
+20 IN PTR client.cfonseca.ops.
+66 IN PTR somethingnew.cfonseca.ops.
